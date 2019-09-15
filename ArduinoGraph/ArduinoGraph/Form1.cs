@@ -14,7 +14,7 @@ namespace ArduinoGraph
     public partial class Form1 : Form
     {
         double anglePrev = 0;
-  
+        double time, timePrev = 0;
         public static Form1 instance;
         double x,y= 0;
         static SerialPort port;
@@ -57,12 +57,12 @@ namespace ArduinoGraph
         }
         public double Calculate(double x,double xPrev)
         {
-            double timePrev = Current();
+
             for (int i = 0; i < 1000000; i++)
             {
 
             }
-            double time = Current();
+            
             double t = (time - timePrev) / 1000;
             return f(x, xPrev,t);
 
@@ -137,11 +137,13 @@ namespace ArduinoGraph
         }
         private void DataReceived(object sender,SerialDataReceivedEventArgs e)
         {
+          
             double angle = 0;
             bool b = double.TryParse(port.ReadExisting(), out angle);
             if (b)
             {
-                y = Calculate(angle, anglePrev) / 100;
+                time = Current();
+                y = Calculate(angle, anglePrev) / 10;
                 instance.BeginInvoke(new Action(delegate ()
                 {
                     Set(y.ToString());
@@ -155,7 +157,9 @@ namespace ArduinoGraph
                 }
                 anglePrev = angle;
                 x += 0.1;
+                timePrev = Current();
             }
+            
         }
         private void Button1_Click_1(object sender, EventArgs e)
         {
@@ -181,6 +185,8 @@ namespace ArduinoGraph
              t.Start();*/
             timer2.Interval = 10;
             port.DataReceived += DataReceived;
+            timePrev = Current();
+
         //    timer2.Start();
         }
        
