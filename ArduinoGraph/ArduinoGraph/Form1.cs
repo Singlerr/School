@@ -31,14 +31,14 @@ namespace ArduinoGraph
             geo.ChartAreas.Add("Draw");
             geo.ChartAreas["Draw"].BackColor = Color.White;
             geo.ChartAreas["Draw"].BackColor = Color.White;
-            geo.ChartAreas["Draw"].AxisX.Maximum = 20;
-            geo.ChartAreas["Draw"].AxisX.Minimum = 0;
-            geo.ChartAreas["Draw"].AxisX.Interval = 2;
+            geo.ChartAreas["Draw"].AxisX.Maximum = 300;
+            geo.ChartAreas["Draw"].AxisX.Minimum = -100;
+            geo.ChartAreas["Draw"].AxisX.Interval = 1;
             geo.ChartAreas["Draw"].AxisX.MajorGrid.LineColor = Color.Black;
             geo.ChartAreas["Draw"].AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            geo.ChartAreas["Draw"].AxisY.Maximum = 20;
-            geo.ChartAreas["Draw"].AxisY.Minimum = -20;
-            geo.ChartAreas["Draw"].AxisY.Interval = 2;
+            geo.ChartAreas["Draw"].AxisY.Maximum = 300;
+            geo.ChartAreas["Draw"].AxisY.Minimum = -100;
+            geo.ChartAreas["Draw"].AxisY.Interval = 1;
             geo.ChartAreas["Draw"].AxisY.MajorGrid.LineColor = Color.Black;
             geo.ChartAreas["Draw"].AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             geo.Series.Add("main");
@@ -109,12 +109,11 @@ namespace ArduinoGraph
             // geo.ChartAreas.Clear();
             //  geo.Series.Clear();
             //  geo.ChartAreas.Add("Draw");
-            if (-20 < x)
-            {
+           
                 geo.ChartAreas["Draw"].AxisX.Maximum = 20+x;
                 geo.ChartAreas["Draw"].AxisX.Minimum = -20+x;
                 geo.Series["main"].Points.AddXY(x, y);
-            }
+            
         }
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -161,6 +160,23 @@ namespace ArduinoGraph
             }
             
         }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            String[] strs = lines.Lines;
+            int y;
+           
+            foreach(String str in strs)
+            {
+                bool b = int.TryParse(str, out y);
+                if (b)
+                {
+                    Draw(y);
+                    x += 0.1;
+                }
+            }
+        }
+
         private void Button1_Click_1(object sender, EventArgs e)
         {
             port = new SerialPort();

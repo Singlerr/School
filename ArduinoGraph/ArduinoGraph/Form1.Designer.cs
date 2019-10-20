@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.geo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -39,22 +39,24 @@
             this.button1 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.lines = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.geo)).BeginInit();
             this.SuspendLayout();
             // 
             // geo
             // 
-            chartArea7.Name = "ChartArea1";
-            this.geo.ChartAreas.Add(chartArea7);
+            chartArea1.Name = "ChartArea1";
+            this.geo.ChartAreas.Add(chartArea1);
             this.geo.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend7.Name = "Legend1";
-            this.geo.Legends.Add(legend7);
+            legend1.Name = "Legend1";
+            this.geo.Legends.Add(legend1);
             this.geo.Location = new System.Drawing.Point(0, 0);
             this.geo.Name = "geo";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.geo.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.geo.Series.Add(series1);
             this.geo.Size = new System.Drawing.Size(800, 450);
             this.geo.TabIndex = 0;
             this.geo.Text = "Geometry";
@@ -90,11 +92,31 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "....";
             // 
+            // lines
+            // 
+            this.lines.Location = new System.Drawing.Point(231, 10);
+            this.lines.Multiline = true;
+            this.lines.Name = "lines";
+            this.lines.Size = new System.Drawing.Size(195, 37);
+            this.lines.TabIndex = 4;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(432, 8);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Display";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.lines);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -117,6 +139,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox lines;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNATranslator", "DNATranslator\DNATranslator.csproj", "{3CCD6C29-F7B8-4FD2-A7D9-54907AA17643}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CCD6C29-F7B8-4FD2-A7D9-54907AA17643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CCD6C29-F7B8-4FD2-A7D9-54907AA17643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CCD6C29-F7B8-4FD2-A7D9-54907AA17643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CCD6C29-F7B8-4FD2-A7D9-54907AA17643}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83F61D07-0F16-49C4-AC09-877F302F8880}
+	EndGlobalSection
+EndGlobal
