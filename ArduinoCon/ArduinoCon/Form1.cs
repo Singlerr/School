@@ -35,12 +35,7 @@ namespace ArduinoCon
             InitializeComponent();
             instance = this;
         }
-        public static double Current()
-        {
-            DateTime Jan1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            TimeSpan javaSpan = DateTime.UtcNow - Jan1970;
-            return javaSpan.TotalMilliseconds;
-        }
+      
         private void Form1_Load(object sender, EventArgs e)
         {
             
@@ -54,15 +49,15 @@ namespace ArduinoCon
         private void Button1_Click(object sender, EventArgs e)
         {
             leftPort = new SerialPort();
-           // rightPort = new SerialPort();
+           rightPort = new SerialPort();
             leftPort.PortName = left.Text;
-          //  rightPort.PortName = right.Text;
-          //  leftPort.BaudRate = 115200;
+           rightPort.PortName = right.Text;
+           leftPort.BaudRate = 115200;
             rightPort.BaudRate = 115200;
             leftPort.DataReceived += DataReceivedL;
-          //  rightPort.DataReceived += DataReceivedR;
+           rightPort.DataReceived += DataReceivedR;
             leftPort.Open();
-         //   rightPort.Open();
+          rightPort.Open();
             status.Text = "Connected";
         }
         public static int Map(int value, int fromSource, int toSource, int fromTarget, int toTarget)
@@ -70,10 +65,10 @@ namespace ArduinoCon
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
       
-        private void DataReceivedR(object sender, SerialDataReceivedEventArgs e)
+        private void DataReceivedL(object sender, SerialDataReceivedEventArgs e)
         {
   
-            String target = rightPort.ReadExisting();
+            String target = leftPort.ReadExisting();
             instance.BeginInvoke(new Action(delegate () {
                 ChangeText("Left: " + target);
             }));
@@ -102,15 +97,15 @@ namespace ArduinoCon
         private void button1_Click_1(object sender, EventArgs e)
         {
             leftPort = new SerialPort();
-          //  rightPort = new SerialPort();
+            rightPort = new SerialPort();
             leftPort.PortName = left.Text;
-          //  rightPort.PortName = right.Text;
+            rightPort.PortName = right.Text;
             leftPort.BaudRate = 115200;
-          //  rightPort.BaudRate = 115200;
+            rightPort.BaudRate = 115200;
             leftPort.DataReceived += DataReceivedL;
-         //   rightPort.DataReceived += DataReceivedR;
+          rightPort.DataReceived += DataReceivedR;
             leftPort.Open();
-         //   rightPort.Open();
+          rightPort.Open();
             status.Text = "Connected";
         }
    
@@ -122,6 +117,11 @@ namespace ArduinoCon
         {
             await Task.Delay(period);
             mouse_event(MOUSEEVENTF_LEFTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+        }
+        async Task RunDelayedTaskR(int period)
+        {
+            await Task.Delay(period);
+            mouse_event(MOUSEEVENTF_RIGHTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -144,44 +144,37 @@ namespace ArduinoCon
         {
             lstat.Text = text;
         }
-        private void DataReceivedL(object sender, SerialDataReceivedEventArgs e)
+        private void ChangeTextR(String text)
         {
-            double angle = 0;
-            bool flag = double.TryParse(leftPort.ReadExisting(), out angle);
-            if (flag)
-            {
-                
-                int k = 0;
-                if (angle < 0)
-                {
-                    k = 0;
-                }
-                else
-                if (angle > 180)
-                {
-                    k = 180;
-                }
-                else
-                {
-                    k = (int)angle;
-                }
-                if (k > 160)
-                {
-                    mouse_event(MOUSEEVENTF_LEFTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
-                }
-                else if (30 < k)
-                {
-                    mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
-                    mouse_event(MOUSEEVENTF_LEFTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
-                    timer2.Interval = Map(k, 0, 160, 31, 100);
-                    timer2.Start();
-                }
-                else
-                {
-                    mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
-                }
+            rstat.Text = text;
+        }
+        private void DataReceivedR(object sender, SerialDataReceivedEventArgs e)
+        {
 
+            String target = rightPort.ReadExisting();
+            instance.BeginInvoke(new Action(delegate () {
+                ChangeText("Right: " + target);
+            }));
+            if (target.Equals("U"))
+            {
+                mouse_event(MOUSEEVENTF_RIGHTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
             }
+            else if (target.Equals("N"))
+            {
+                mouse_event(MOUSEEVENTF_RIGHTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+            }
+            else
+            {
+                double angle = 0;
+                bool flag = double.TryParse(target, out angle);
+                if (flag)
+                {
+                    mouse_event(MOUSEEVENTF_RIGHTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+                    int interval = Map((int)(angle * 10), 0, 45, 1, 100);
+                    RunDelayedTaskR(interval);
+                }
+            }
+
         }
     }
 }
